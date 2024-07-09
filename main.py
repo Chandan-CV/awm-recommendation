@@ -14,7 +14,7 @@ model = joblib.load('simpleclassifier.joblib')
 
 features_array = preprocessData(dataset)
 st.title("andwemet")
-
+st.write("This recommendations are generated based on your subjective answers, using AI that is private and secure. We think they'd be a great fit, but hey- no algorighm can ever know what's best for you")
 st.write("All users:")
 DatasetSlot = st.empty()
 rowNumberSlot = st.empty()
