@@ -8,6 +8,8 @@ dataurl = dataurl.replace('/edit?gid=', '/export?format=csv&gid=')
 dataset = pd.read_csv(dataurl)
 # dataset = dataset[dataset['My age'] != 'test']
 dataset = dataset.fillna('')
+dataset.index = np.arange(2, len(dataset) + 2)
+
 
 model = joblib.load('simpleclassifier.joblib')
 
@@ -31,7 +33,7 @@ if "matches" not in st.session_state:
 if st.session_state.matches is not None:
     DisplayMatchesSlot.write(st.session_state.matches)
 
-row = rowNumberSlot.number_input("Enter your row number and press enter", min_value=0, max_value=len(dataset)-1, step=1)
+row = rowNumberSlot.number_input("Enter your row number and press enter", min_value=2, max_value=len(dataset)+1, step=1)
 findMyMatchSlot.button(f"Find match for row: {row}", on_click=lambda: find_match(row))
 # showMyProfileSlot.write(dataset.iloc[row].astype(str))
 
