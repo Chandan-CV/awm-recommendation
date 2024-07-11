@@ -34,7 +34,7 @@ if st.session_state.matches is not None:
     DisplayMatchesSlot.write(st.session_state.matches)
 
 row = rowNumberSlot.number_input("Enter your row number and press enter", min_value=2, max_value=len(dataset)+1, step=1)
-findMyMatchSlot.button(f"Find match for row: {row}", on_click=lambda: find_match(row))
+findMyMatchSlot.button(f"Find match for row: {row}", on_click=lambda: find_match(row-2))
 # showMyProfileSlot.write(dataset.iloc[row].astype(str))
 
 
