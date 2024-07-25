@@ -61,7 +61,7 @@ def get_features_array(data):
 
 
 def preprocessData(dataset):
-    dataset = (dataset.iloc[:,:3]).join(dataset.iloc[:,5])
+    dataset = (dataset.iloc[:,:3]).join(dataset.iloc[:,6])
 
     vectorizer = TfidfVectorizer()
     city_vectorized = vectorizer.fit_transform(dataset['My city of residence'])
