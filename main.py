@@ -16,7 +16,7 @@ model = joblib.load('simpleclassifier.joblib')
 
 features_array = preprocessData(dataset)
 st.title("andwemet")
-st.write("This recommendations are generated based on your subjective answers, using AI that is private and secure. We think they'd be a great fit, but hey- no algorighm can ever know what's best for you")
+st.write("These recommendations are generated based on your subjective answers, using AI that is private and secure. We think they'd be a great fit, but hey- no algorighm can ever know what's best for you")
 st.write("All users:")
 DatasetSlot = st.empty()
 rowNumberSlot = st.empty()
@@ -45,5 +45,12 @@ def find_match(row):
     match_index = indices[0]
     data = dataset.iloc[match_index]
     data = data[data["My Gender"]!= dataset.iloc[row]["My Gender"]]
+    if(dataset.iloc[row]["My age"]<50):
+        if(dataset.iloc[row]["My Gender"]=="Female"):
+            data = data[((data["My age"])>= (dataset.iloc[row]["My age"]-2)) | ((data["My age"])<= (dataset.iloc[row]["My age"]+5)) ]
+          
+        else:
+            data = data[(data["My age"])<= (dataset.iloc[row]["My age"]+3)]
+            
     st.session_state.matches = data
     DisplayMatchesSlot.write(st.session_state.matches)
