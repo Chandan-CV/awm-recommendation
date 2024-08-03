@@ -45,12 +45,12 @@ def find_match(row):
     match_index = indices[0]
     data = dataset.iloc[match_index]
     data = data[data["My Gender"]!= dataset.iloc[row]["My Gender"]]
-    if(dataset.iloc[row]["My age"]<50):
-        if(dataset.iloc[row]["My Gender"]=="Female"):
-            data = data[((data["My age"])>= (dataset.iloc[row]["My age"]-2)) | ((data["My age"])<= (dataset.iloc[row]["My age"]+5)) ]
-          
-        else:
-            data = data[(data["My age"])<= (dataset.iloc[row]["My age"]+3)]
+
+    if(dataset.iloc[row]["My Gender"]=="Female"):
+        data = data[((data["My age"])>= (dataset.iloc[row]["My age"]-2)) & ((data["My age"])<= (dataset.iloc[row]["My age"]+5)) ]
+        
+    else:
+        data = data[(data["My age"])<= (dataset.iloc[row]["My age"]+3)]
             
     st.session_state.matches = data
     DisplayMatchesSlot.write(st.session_state.matches)
