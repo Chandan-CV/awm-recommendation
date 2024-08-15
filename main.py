@@ -10,7 +10,6 @@ dataset = pd.read_csv(dataurl)
 dataset = dataset.fillna('')
 dataset.index = np.arange(2, len(dataset) + 2)
 
-
 model = joblib.load('simpleclassifier.joblib')
 
 
@@ -24,6 +23,11 @@ findMyMatchSlot = st.empty()
 # showMyProfileSlot = st.empty()
 DisplayMatchesSlot = st.empty()
 
+if "isError" not in st.session_state:
+    st.session_state.isError = False
+
+if(st.session_state.isError):
+    DisplayMatchesSlot.write("The servers are crunching some new entries. Please try again later (PS: It's a good time to grab a cup of coffee)")
 
 DatasetSlot.dataframe(dataset.astype(str))
 
@@ -41,7 +45,15 @@ findMyMatchSlot.button(f"Find match for row: {row}", on_click=lambda: find_match
 def find_match(row):
     features = features_array[row]
     features = features.reshape(1, -1)
-    distances, indices = model.kneighbors(features)
+    distances = []
+    indices = []
+    try:
+        #  throw an error to test the error message
+        throw_error = 1/0
+        # distances, indices = model.kneighbors(features)
+    except(Exception):
+        st.session_state.isError = True
+        return
     match_index = indices[0]
     data = dataset.iloc[match_index]
     data = data[data["My Gender"]!= dataset.iloc[row]["My Gender"]]
