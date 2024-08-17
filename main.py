@@ -3,13 +3,13 @@ import numpy as np
 import pandas as pd
 import streamlit as st
 from preprocessing import get_features_array, preprocessData
-dataurl = 'https://docs.google.com/spreadsheets/d/1EmeVCJzCiMISggPuS5clv-gz4mznq24NMyFV8aXkbK4/edit?gid=0#gid=0'
-dataurl = dataurl.replace('/edit?gid=', '/export?format=csv&gid=')
-dataset = pd.read_csv(dataurl)
+# dataurl = 'https://docs.google.com/spreadsheets/d/1EmeVCJzCiMISggPuS5clv-gz4mznq24NMyFV8aXkbK4/edit?gid=0#gid=0'
+# dataurl = dataurl.replace('/edit?gid=', '/export?format=csv&gid=')
+dataset = pd.read_csv("dataset.csv")
+dataset = dataset.drop(dataset.columns[[0]], axis =1)
 # dataset = dataset[dataset['My age'] != 'test']
 dataset = dataset.fillna('')
 dataset.index = np.arange(2, len(dataset) + 2)
-
 model = joblib.load('simpleclassifier.joblib')
 
 
@@ -49,9 +49,9 @@ def find_match(row):
     indices = []
     try:
         #  throw an error to test the error message
-        throw_error = 1/0
-        # distances, indices = model.kneighbors(features)
-    except(Exception):
+        distances, indices = model.kneighbors(features)
+    except Exception as e:
+        print (e)
         st.session_state.isError = True
         return
     match_index = indices[0]
